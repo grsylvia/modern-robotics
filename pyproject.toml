@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mrlib"
+version = "0.1.0"
+description = "My own implementation of Modern Robotics (Lynch & Park), written while working through the book"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "modern_robotics",  # the book's reference library, used only as a test oracle
+    "matplotlib",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# A sourced ROS 2 environment puts its pytest plugins on PYTHONPATH; they
+# fail to load in this venv and aren't needed here.
+addopts = """
+    -p no:launch_testing -p no:launch_ros -p no:ament_lint -p no:ament_flake8
+    -p no:ament_pep257 -p no:ament_copyright -p no:ament_xmllint
+"""
